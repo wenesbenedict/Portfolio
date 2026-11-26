@@ -1,0 +1,12 @@
+# Local tool settings
+.claude/
+
+# Leftover temp files
+*.tmp
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+Desktop.ini
+.vscode/
+.idea/
