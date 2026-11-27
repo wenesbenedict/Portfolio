@@ -1,0 +1,74 @@
+@keyframes orbit-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes orbit-spin-reverse {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+/* Controlled 200ms chromatic registration glitch on intentional hover */
+@keyframes chromatic-glitch {
+  0% {
+    transform: translate3d(0, 0, 0);
+    text-shadow:
+      2px 0 rgba(40, 200, 255, 0.35),
+      -2px 0 rgba(255, 49, 85, 0.35);
+  }
+  25% {
+    transform: translate3d(-3px, 0, 0) skewX(-2deg);
+    text-shadow:
+      6px 0 rgba(40, 200, 255, 0.85),
+      -6px 0 rgba(255, 49, 85, 0.85);
+  }
+  50% {
+    transform: translate3d(3px, 1px, 0) skewX(1.5deg);
+    text-shadow:
+      -5px 0 rgba(40, 200, 255, 0.75),
+      5px 0 rgba(255, 49, 85, 0.75);
+  }
+  75% {
+    transform: translate3d(-1px, -1px, 0);
+    text-shadow:
+      3px 0 rgba(40, 200, 255, 0.5),
+      -3px 0 rgba(255, 49, 85, 0.5);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+    text-shadow:
+      2px 0 rgba(40, 200, 255, 0.28),
+      -2px 0 rgba(255, 49, 85, 0.32);
+  }
+}
+
+.glitch-hover:hover {
+  animation: chromatic-glitch 220ms steps(2, end) 1;
+}
+
+.animate-orbit-slow {
+  transform-origin: 240px 220px;
+  animation: orbit-spin 44s linear infinite;
+}
+
+.animate-orbit-reverse {
+  transform-origin: 240px 220px;
+  animation: orbit-spin-reverse 34s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .glitch-hover:hover {
+    animation: none !important;
+  }
+
+  .animate-orbit-slow,
+  .animate-orbit-reverse {
+    animation: none !important;
+  }
+}

@@ -1,0 +1,105 @@
+@import "tailwindcss";
+@import "./variables.css";
+@import "./animations.css";
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 86px;
+  }
+
+  body {
+    margin: 0;
+    min-width: 320px;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.65;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Subtle halftone texture across the canvas */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.11;
+    background-image: radial-gradient(rgba(245, 242, 234, 0.18) 0.6px, transparent 0.7px);
+    background-size: 6px 6px;
+    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.35), transparent 88%);
+  }
+
+  ::selection {
+    background: var(--accent-red);
+    color: var(--text-primary);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent-cyan);
+    outline-offset: 4px;
+  }
+}
+
+html.has-custom-cursor,
+html.has-custom-cursor * {
+  cursor: none !important;
+}
+
+.lab-container {
+  width: min(1220px, calc(100% - 48px));
+  margin-inline: auto;
+}
+
+@media (max-width: 768px) {
+  .lab-container {
+    width: calc(100% - 32px);
+  }
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-mono-tech {
+  font-family: var(--font-mono);
+}
+
+.chromatic-edge {
+  text-shadow:
+    2px 0 rgba(40, 200, 255, 0.28),
+    -2px 0 rgba(255, 49, 85, 0.32);
+}
+
+.chromatic-red {
+  text-shadow: 3px 0 rgba(40, 200, 255, 0.55);
+}
+
+.halftone-corner {
+  background-image: radial-gradient(var(--accent-red) 1.1px, transparent 1.4px);
+  background-size: 7px 7px;
+  mask-image: radial-gradient(circle, #000 18%, transparent 72%);
+}
+
+.halftone-corner-cyan {
+  background-image: radial-gradient(var(--accent-cyan) 1.1px, transparent 1.4px);
+  background-size: 7px 7px;
+  mask-image: radial-gradient(circle, #000 18%, transparent 72%);
+}
+
+.tech-grid-bg {
+  background-image:
+    linear-gradient(rgba(245, 242, 234, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245, 242, 234, 0.04) 1px, transparent 1px);
+  background-size: 52px 52px;
+}

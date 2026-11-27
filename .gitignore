@@ -1,8 +1,15 @@
+# Dependencies & build
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# Local backup & temp
+_legacy_vanilla/
+*.tmp
+
 # Local tool settings
 .claude/
-
-# Leftover temp files
-*.tmp
 
 # OS / editor noise
 .DS_Store

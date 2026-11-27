@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prototype — Wenes Benedict AC | Editorial CV Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg-primary: #080810;
+      --bg-secondary: #11111b;
+      --surface-card: #171722;
+      --surface-raised: #1d1d2a;
+
+      --text-primary: #f5f2ea;
+      --text-secondary: #92929f;
+      --text-quiet: #626271;
+
+      --accent-cyan: #28c8ff;
+      --accent-red: #ff3155;
+      --accent-violet: #a855f7;
+
+      --border-subtle: rgba(245, 242, 234, 0.11);
+      --border-cyan: rgba(40, 200, 255, 0.42);
+      --border-red: rgba(255, 49, 85, 0.45);
+
+      --font-display: "Space Grotesk", "Inter", sans-serif;
+      --font-body: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: "Fira Code", monospace;
+
+      --ease-out: cubic-bezier(0.2, 0.72, 0.22, 1);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* Subtle global halftone texture */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.12;
+      background-image: radial-gradient(rgba(245, 242, 234, 0.18) 0.6px, transparent 0.7px);
+      background-size: 6px 6px;
+      mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.35), transparent 85%);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+      color: inherit;
+      background: none;
+      border: 0;
+      cursor: pointer;
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--accent-cyan);
+      outline-offset: 4px;
+    }
+
+    .container {
+      width: min(1220px, calc(100% - 48px));
+      margin-inline: auto;
+    }
+
+    /* Prototype banner */
+    .proto-bar {
+      position: relative;
+      z-index: 1200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      padding: 0.35rem 1rem;
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border-subtle);
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+    }
+    .proto-bar span {
+      color: var(--accent-cyan);
+    }
+
+    /* Scroll progress */
+    .scroll-progress {
+      position: sticky;
+      top: 0;
+      z-index: 1100;
+      height: 2px;
+      background: rgba(245, 242, 234, 0.06);
+    }
+    .scroll-progress-fill {
+      width: 32%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent-red), var(--accent-cyan));
+    }
+
+    /* Header */
+    .site-header {
+      position: sticky;
+      top: 2px;
+      z-index: 1000;
+      background: rgba(8, 8, 16, 0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(245, 242, 234, 0.08);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 74px;
+      gap: 2rem;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: 1px solid var(--border-red);
+      background: var(--surface-card);
+      color: var(--accent-red);
+      font-family: var(--font-display);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: -0.05em;
+      box-shadow: 3px 3px 0 rgba(40, 200, 255, 0.25);
+      transform: rotate(-4deg);
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.15;
+    }
+    .brand-name {
+      font-family: var(--font-display);
+      font-size: 0.94rem;
+      font-weight: 600;
+      letter-spacing: -0.025em;
+    }
+    .brand-sub {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.08em;
+      color: var(--text-quiet);
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.75rem;
+    }
+
+    .nav-link {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      transition: color 180ms ease;
+    }
+    .nav-link-idx {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      color: var(--text-quiet);
+    }
+    .nav-link::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 100%;
+      bottom: -4px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent-red), var(--accent-cyan));
+      transition: right 220ms var(--ease-out);
+    }
+    .nav-link:hover,
+    .nav-link.is-active {
+      color: var(--text-primary);
+    }
+    .nav-link:hover .nav-link-idx,
+    .nav-link.is-active .nav-link-idx {
+      color: var(--accent-cyan);
+    }
+    .nav-link:hover::after,
+    .nav-link.is-active::after {
+      right: 0;
+    }
+
+    .menu-btn {
+      display: none;
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--border-subtle);
+      background: var(--surface-card);
+      place-items: center;
+    }
+    .menu-btn-lines {
+      display: grid;
+      gap: 5px;
+      width: 18px;
+    }
+    .menu-btn-lines span {
+      display: block;
+      height: 1.5px;
+      background: var(--text-primary);
+    }
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      z-index: 1;
+      min-height: calc(100svh - 105px);
+      display: flex;
+      align-items: center;
+      padding: clamp(3.5rem, 7vh, 5.5rem) 0 clamp(3rem, 6vh, 4.5rem);
+      overflow: hidden;
+    }
+
+    /* Fine coordinate grid behind right side */
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      opacity: 0.32;
+      background-image:
+        linear-gradient(rgba(245, 242, 234, 0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(245, 242, 234, 0.045) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: linear-gradient(90deg, transparent 5%, #000 55%, #000 100%);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(360px, 0.92fr);
+      align-items: center;
+      gap: clamp(2rem, 4.5vw, 4.5rem);
+    }
+
+    /* Left Column */
+    .hero-copy {
+      max-width: 650px;
+    }
+
+    .hero-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+      margin: 0 0 1.4rem;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+    .kicker-mark {
+      width: 22px;
+      height: 2px;
+      background: var(--accent-cyan);
+      box-shadow: 4px 0 0 var(--accent-red);
+    }
+
+    .hero-title {
+      margin: 0 0 1.5rem;
+      font-family: var(--font-display);
+      font-size: clamp(3.3rem, 7.2vw, 6.2rem);
+      font-weight: 700;
+      line-height: 0.88;
+      letter-spacing: -0.055em;
+    }
+
+    .hero-line {
+      display: block;
+      animation: lineReveal 680ms var(--ease-out) both;
+    }
+    .hero-line:nth-child(1) {
+      animation-delay: 60ms;
+    }
+    .hero-line:nth-child(2) {
+      animation-delay: 160ms;
+      text-shadow:
+        2px 0 rgba(40, 200, 255, 0.28),
+        -2px 0 rgba(255, 49, 85, 0.32);
+    }
+    .hero-line:nth-child(3) {
+      animation-delay: 260ms;
+      color: var(--accent-red);
+      text-shadow: 3px 0 rgba(40, 200, 255, 0.55);
+    }
+    .hero-period {
+      color: var(--accent-cyan);
+    }
+
+    @keyframes lineReveal {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero-role-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.55rem 0.85rem;
+      margin-bottom: 1rem;
+      animation: fadeUp 600ms 340ms var(--ease-out) both;
+    }
+
+    .role-tag {
+      padding: 0.22rem 0.55rem;
+      border: 1px solid var(--border-cyan);
+      background: rgba(40, 200, 255, 0.08);
+      color: var(--accent-cyan);
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .role-active {
+      font-family: var(--font-display);
+      font-size: clamp(1.05rem, 1.8vw, 1.3rem);
+      font-weight: 600;
+      color: var(--text-primary);
+      transition: opacity 180ms ease, transform 180ms ease;
+    }
+    .role-active.is-swapping {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+
+    .hero-intro {
+      max-width: 530px;
+      margin: 0 0 2rem;
+      color: #c5c3cd;
+      font-size: clamp(0.98rem, 1.3vw, 1.08rem);
+      line-height: 1.75;
+      animation: fadeUp 600ms 420ms var(--ease-out) both;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem;
+      animation: fadeUp 600ms 500ms var(--ease-out) both;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.9rem;
+      min-height: 48px;
+      padding: 0.75rem 1.35rem;
+      border: 1px solid transparent;
+      font-size: 0.84rem;
+      font-weight: 600;
+      transition: transform 180ms var(--ease-out), box-shadow 180ms ease, border-color 180ms ease, background 180ms ease;
+    }
+
+    .btn-primary {
+      background: var(--accent-red);
+      color: var(--text-primary);
+    }
+    .btn-primary:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 5px 5px 0 var(--accent-cyan);
+    }
+
+    .btn-secondary {
+      border-color: rgba(245, 242, 234, 0.22);
+      background: var(--surface-card);
+      color: var(--text-primary);
+    }
+    .btn-secondary:hover {
+      border-color: var(--accent-cyan);
+      transform: translate(-2px, -2px);
+      box-shadow: 4px 4px 0 rgba(255, 49, 85, 0.45);
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.75rem 1.5rem;
+      margin-top: 2rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--border-subtle);
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--text-secondary);
+      animation: fadeUp 600ms 580ms var(--ease-out) both;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent-cyan);
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Right Column: Computer Vision & Neural Lab Frame */
+    .cv-stage {
+      position: relative;
+      border: 1px solid var(--border-subtle);
+      background: linear-gradient(155deg, rgba(23, 23, 34, 0.9), rgba(11, 11, 19, 0.96));
+      padding: 1rem;
+      box-shadow: 8px 8px 0 rgba(40, 200, 255, 0.08);
+      animation: fadeUp 700ms 200ms var(--ease-out) both;
+    }
+
+    /* Halftone corner accent */
+    .cv-stage::after {
+      content: "";
+      position: absolute;
+      right: -18px;
+      bottom: -18px;
+      width: 140px;
+      height: 140px;
+      z-index: -1;
+      background-image: radial-gradient(var(--accent-red) 1.1px, transparent 1.4px);
+      background-size: 7px 7px;
+      mask-image: radial-gradient(circle, #000 20%, transparent 72%);
+      opacity: 0.45;
+      pointer-events: none;
+    }
+
+    .cv-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 0.75rem;
+      margin-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border-subtle);
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.08em;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+    }
+    .cv-header strong {
+      color: var(--accent-cyan);
+      font-weight: 500;
+    }
+
+    .cv-canvas-wrap {
+      position: relative;
+      aspect-ratio: 1 / 0.92;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 50% 50%, rgba(40, 200, 255, 0.06), transparent 65%),
+        var(--bg-primary);
+      border: 1px solid rgba(245, 242, 234, 0.07);
+    }
+
+    .cv-svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .orbit-slow {
+      transform-origin: 240px 220px;
+      animation: spin 44s linear infinite;
+    }
+    .orbit-reverse {
+      transform-origin: 240px 220px;
+      animation: spin 34s linear infinite reverse;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .cv-reticle {
+      transition: transform 180ms ease-out;
+    }
+
+    .cv-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding-top: 0.75rem;
+      margin-top: 0.75rem;
+      border-top: 1px solid var(--border-subtle);
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      color: var(--text-quiet);
+    }
+    .cv-footer span b {
+      color: var(--accent-red);
+      font-weight: 500;
+    }
+
+    /* Mobile Drawer */
+    .mobile-drawer {
+      display: none;
+    }
+
+    /* Responsive */
+    @media (max-width: 960px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+      .hero-copy {
+        max-width: 100%;
+      }
+      .cv-stage {
+        max-width: 520px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        width: calc(100% - 32px);
+      }
+      .nav-links {
+        display: none;
+      }
+      .menu-btn {
+        display: grid;
+      }
+      .mobile-drawer {
+        display: none;
+        position: fixed;
+        inset: 76px 0 auto;
+        z-index: 999;
+        padding: 1rem 16px 1.5rem;
+        background: rgba(8, 8, 16, 0.97);
+        border-bottom: 1px solid var(--border-subtle);
+      }
+      .mobile-drawer.is-open {
+        display: grid;
+        gap: 0.25rem;
+      }
+      .mobile-drawer a {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid rgba(245, 242, 234, 0.06);
+        font-size: 0.92rem;
+      }
+      .hero {
+        min-height: unset;
+        padding: 2.5rem 0 3.5rem;
+      }
+      .hero-title {
+        font-size: clamp(2.85rem, 13vw, 4.2rem);
+        letter-spacing: -0.045em;
+      }
+      .cv-canvas-wrap {
+        aspect-ratio: 16 / 11;
+      }
+      .cv-stage::after {
+        display: none;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="proto-bar">
+    <span>PROTOTYPE</span> // Concept C — Editorial CV Lab (Isolated Homepage Mockup)
+  </div>
+
+  <div class="scroll-progress" aria-hidden="true">
+    <div class="scroll-progress-fill"></div>
+  </div>
+
+  <header class="site-header">
+    <div class="container nav-inner">
+      <a class="brand" href="#top" aria-label="Wenes Benedict AC">
+        <span class="brand-mark">WB</span>
+        <span class="brand-text">
+          <span class="brand-name">Wenes Benedict AC</span>
+          <span class="brand-sub">CSE // AI &amp; ML</span>
+        </span>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a class="nav-link is-active" href="#top"><span class="nav-link-idx">01</span>Home</a>
+        <a class="nav-link" href="#about"><span class="nav-link-idx">02</span>About</a>
+        <a class="nav-link" href="#arsenal"><span class="nav-link-idx">03</span>Arsenal</a>
+        <a class="nav-link" href="#work"><span class="nav-link-idx">04</span>Projects</a>
+        <a class="nav-link" href="#journey"><span class="nav-link-idx">05</span>Journey</a>
+        <a class="nav-link" href="#contact"><span class="nav-link-idx">06</span>Contact</a>
+      </nav>
+
+      <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-label="Toggle menu">
+        <span class="menu-btn-lines">
+          <span></span>
+          <span></span>
+        </span>
+      </button>
+    </div>
+  </header>
+
+  <nav class="mobile-drawer" id="mobileDrawer" aria-label="Mobile navigation">
+    <a href="#top"><span>Home</span><span class="nav-link-idx">01</span></a>
+    <a href="#about"><span>About</span><span class="nav-link-idx">02</span></a>
+    <a href="#arsenal"><span>Arsenal</span><span class="nav-link-idx">03</span></a>
+    <a href="#work"><span>Projects</span><span class="nav-link-idx">04</span></a>
+    <a href="#journey"><span>Journey</span><span class="nav-link-idx">05</span></a>
+    <a href="#contact"><span>Contact</span><span class="nav-link-idx">06</span></a>
+  </nav>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <!-- Left Column: Editorial Identity -->
+        <div class="hero-copy">
+          <p class="hero-kicker">
+            <span class="kicker-mark" aria-hidden="true"></span>
+            Computer Science • AI/ML • Computer Vision
+          </p>
+
+          <h1 class="hero-title">
+            <span class="hero-line">WENES</span>
+            <span class="hero-line">BENEDICT</span>
+            <span class="hero-line">AC<span class="hero-period">.</span></span>
+          </h1>
+
+          <div class="hero-role-row">
+            <span class="role-tag">FOCUS</span>
+            <span class="role-active" id="roleText">AI/ML &amp; Computer Vision</span>
+          </div>
+
+          <p class="hero-intro">
+            B.Tech Computer Science Engineering student building practical software across
+            computer vision, machine learning, and full-stack web systems.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#work">
+              <span>Explore Projects</span>
+              <span aria-hidden="true">↗</span>
+            </a>
+            <a class="btn btn-secondary" href="#contact">
+              <span>Contact</span>
+              <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+
+          <div class="hero-meta">
+            <span class="status-pill">
+              <span class="status-dot" aria-hidden="true"></span>
+              Open to internships &amp; engineering collaborations
+            </span>
+            <span>// BASED IN INDIA</span>
+          </div>
+        </div>
+
+        <!-- Right Column: Computer Vision & Neural Graph Visualization -->
+        <aside class="cv-stage" id="cvStage" aria-label="Interactive computer vision graph">
+          <div class="cv-header">
+            <span>CV_GRAPH // <strong>ACTIVE_TRACK</strong></span>
+            <span id="coordReadout">X: 0.50 &nbsp; Y: 0.50</span>
+          </div>
+
+          <div class="cv-canvas-wrap">
+            <svg class="cv-svg" viewBox="0 0 480 440" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Coordinate crosshairs -->
+              <line x1="240" y1="16" x2="240" y2="424" stroke="rgba(245,242,234,0.06)" stroke-dasharray="4 6" />
+              <line x1="16" y1="220" x2="464" y2="220" stroke="rgba(245,242,234,0.06)" stroke-dasharray="4 6" />
+
+              <!-- Orbital calibration rings -->
+              <circle class="orbit-slow" cx="240" cy="220" r="158" stroke="rgba(245,242,234,0.14)" stroke-width="1" stroke-dasharray="3 9" />
+              <ellipse class="orbit-reverse" cx="240" cy="220" rx="184" ry="88" transform="rotate(-28 240 220)" stroke="rgba(40,200,255,0.28)" stroke-width="1" stroke-dasharray="4 8" />
+              <ellipse class="orbit-slow" cx="240" cy="220" rx="184" ry="88" transform="rotate(28 240 220)" stroke="rgba(255,49,85,0.24)" stroke-width="1" stroke-dasharray="4 8" />
+
+              <!-- Pipeline edges -->
+              <path
+                d="M84 290 L165 150 L240 220 L338 122 M165 150 L185 322 L240 220 L372 288 M338 122 L372 288"
+                stroke="rgba(245,242,234,0.34)"
+                stroke-width="1.2"
+                stroke-dasharray="3 5"
+              />
+
+              <!-- Detection bounding box overlay -->
+              <g class="cv-reticle" id="cvReticle">
+                <rect x="172" y="152" width="136" height="136" stroke="rgba(40,200,255,0.45)" stroke-width="1" stroke-dasharray="6 4" />
+                <!-- Corner brackets -->
+                <path d="M172 168 V152 H188 M292 152 H308 V168 M172 272 V288 H188 M292 288 H308 V272" stroke="#28C8FF" stroke-width="2" />
+                <text x="174" y="144" fill="#28C8FF" font-family="Fira Code, monospace" font-size="9" letter-spacing="0.08em">ROI // WB_CORE</text>
+              </g>
+
+              <!-- Central Core Monogram Box -->
+              <g transform="translate(240 220) rotate(-5)">
+                <rect x="-46" y="-46" width="92" height="92" fill="#171722" stroke="rgba(245,242,234,0.28)" stroke-width="1.2" />
+                <rect x="-40" y="-40" width="80" height="80" stroke="rgba(255,49,85,0.35)" stroke-width="1" />
+                <text
+                  x="0"
+                  y="11"
+                  text-anchor="middle"
+                  fill="#F5F2EA"
+                  font-family="Space Grotesk, sans-serif"
+                  font-size="30"
+                  font-weight="700"
+                  letter-spacing="-2"
+                >WB</text>
+              </g>
+
+              <!-- Nodes -->
+              <circle cx="84" cy="290" r="6" fill="#FF3155" stroke="#080810" stroke-width="2.5" />
+              <text x="64" y="312" fill="#92929F" font-family="Fira Code, monospace" font-size="9">INPUT</text>
+
+              <circle cx="165" cy="150" r="7" fill="#28C8FF" stroke="#080810" stroke-width="2.5" />
+              <text x="128" y="136" fill="#92929F" font-family="Fira Code, monospace" font-size="9">VISION</text>
+
+              <circle cx="338" cy="122" r="6" fill="#A855F7" stroke="#080810" stroke-width="2.5" />
+              <text x="348" y="118" fill="#92929F" font-family="Fira Code, monospace" font-size="9">MODEL</text>
+
+              <circle cx="185" cy="322" r="5" fill="#28C8FF" stroke="#080810" stroke-width="2.5" />
+              <circle cx="372" cy="288" r="7" fill="#FF3155" stroke="#080810" stroke-width="2.5" />
+              <text x="352" y="310" fill="#92929F" font-family="Fira Code, monospace" font-size="9">SYSTEM</text>
+            </svg>
+          </div>
+
+          <div class="cv-footer">
+            <span>PIPELINE: <b>VISION → INFERENCE → UI</b></span>
+            <span>ARCH // 2026</span>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Mobile menu toggle
+    const menuBtn = document.getElementById("menuBtn");
+    const drawer = document.getElementById("mobileDrawer");
+    menuBtn.addEventListener("click", () => {
+      const open = drawer.classList.toggle("is-open");
+      menuBtn.setAttribute("aria-expanded", String(open));
+    });
+
+    // Subtle role rotation (pauses on reduced motion or hidden tab)
+    const roleEl = document.getElementById("roleText");
+    const roles = ["AI/ML & Computer Vision", "Full-Stack Engineering", "Practical Software Systems"];
+    let idx = 0;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    setInterval(() => {
+      if (reduced.matches || document.hidden) return;
+      roleEl.classList.add("is-swapping");
+      setTimeout(() => {
+        idx = (idx + 1) % roles.length;
+        roleEl.textContent = roles[idx];
+        roleEl.classList.remove("is-swapping");
+      }, 180);
+    }, 3600);
+
+    // Pointer-responsive reticle tracking on fine pointers
+    const stage = document.getElementById("cvStage");
+    const reticle = document.getElementById("cvReticle");
+    const readout = document.getElementById("coordReadout");
+    const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
+
+    if (finePointer.matches && !reduced.matches) {
+      stage.addEventListener("pointermove", (e) => {
+        const rect = stage.getBoundingClientRect();
+        const nx = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        const ny = Math.max(0, Math.min(1, (e.clientY - rect.top) / rect.height));
+        const dx = (nx - 0.5) * 14;
+        const dy = (ny - 0.5) * 14;
+        reticle.style.transform = `translate(${dx}px, ${dy}px)`;
+        readout.innerHTML = `X: ${nx.toFixed(2)} &nbsp; Y: ${ny.toFixed(2)}`;
+      });
+
+      stage.addEventListener("pointerleave", () => {
+        reticle.style.transform = "translate(0px, 0px)";
+        readout.innerHTML = "X: 0.50 &nbsp; Y: 0.50";
+      });
+    }
+  </script>
+</body>
+</html>
